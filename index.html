@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101a35" />
+  <meta name="description" content="A responsive weather forecast website with live weather and a 5-day forecast." />
+  <title>SkyCast — Weather Forecast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="SkyCast home">
+        <span class="brand-icon">☼</span><span>sky<span class="brand-light">cast</span></span>
+      </a>
+      <div class="side-label">YOUR WEATHER</div>
+      <button class="nav-item active" id="homeNav"><span class="nav-symbol">◉</span> Overview</button>
+      <button class="nav-item" id="locationButton"><span class="nav-symbol">⌖</span> Use my location</button>
+      <div class="side-divider"></div>
+      <div class="side-label">QUICK CITIES</div>
+      <button class="city-shortcut" data-city="Chennai"><span class="city-dot coral"></span> Chennai <span>›</span></button>
+      <button class="city-shortcut" data-city="Bengaluru"><span class="city-dot blue"></span> Bengaluru <span>›</span></button>
+      <button class="city-shortcut" data-city="Mumbai"><span class="city-dot yellow"></span> Mumbai <span>›</span></button>
+      <button class="city-shortcut" data-city="Delhi"><span class="city-dot green"></span> New Delhi <span>›</span></button>
+      <div class="sidebar-bottom">
+        <div class="mini-sun">☀</div>
+        <p class="mini-title">Weather, made simple.</p>
+        <p class="mini-copy">Your daily forecast, all in one place.</p>
+        <span class="api-credit">Powered by Open-Meteo</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">WEATHER DASHBOARD</p>
+          <h1>Good day to check the sky<span class="heading-dot">.</span></h1>
+        </div>
+        <div class="top-actions">
+          <form class="search-form" id="searchForm" role="search">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="cityInput" type="search" placeholder="Search any city..." aria-label="Search city" autocomplete="off" />
+            <button type="submit" aria-label="Search">↵</button>
+          </form>
+          <button class="unit-toggle" id="unitToggle" aria-label="Toggle temperature unit">°C <span>/</span> °F</button>
+        </div>
+      </header>
+
+      <div id="statusMessage" class="status-message" role="status" aria-live="polite">Loading weather…</div>
+
+      <section class="hero-grid">
+        <article class="current-card">
+          <div class="hero-top">
+            <div>
+              <p class="card-kicker">CURRENT WEATHER</p>
+              <h2 id="cityName">Chennai, India</h2>
+              <p class="muted" id="currentDate">Getting local time…</p>
+            </div>
+            <span class="live-pill"><span></span> LIVE</span>
+          </div>
+          <div class="current-weather">
+            <div>
+              <div class="temperature"><span id="currentTemp">--</span><sup id="tempUnit">°C</sup></div>
+              <p class="condition" id="conditionText">Checking the sky…</p>
+              <p class="feels-like">Feels like <strong id="feelsLike">--°</strong></p>
+            </div>
+            <div class="weather-illustration" id="weatherIllustration" aria-hidden="true">🌤️</div>
+          </div>
+          <div class="hero-footer">
+            <span>Today's high <strong id="todayHigh">--°</strong></span>
+            <span class="footer-divider"></span>
+            <span>Today's low <strong id="todayLow">--°</strong></span>
+            <span class="footer-divider"></span>
+            <span id="sunshineText">☀ Stay weather-aware</span>
+          </div>
+        </article>
+
+        <article class="highlight-card">
+          <div class="section-heading">
+            <div><p class="card-kicker">AT A GLANCE</p><h2>Today's highlights</h2></div>
+            <span class="highlight-icon">✦</span>
+          </div>
+          <div class="metrics-grid">
+            <div class="metric">
+              <div class="metric-label"><span class="metric-icon humidity">≈</span> Humidity</div>
+              <div class="metric-value"><span id="humidity">--</span><small>%</small></div>
+              <p class="metric-note" id="humidityNote">Relative humidity</p>
+            </div>
+            <div class="metric">
+              <div class="metric-label"><span class="metric-icon wind">↗</span> Wind speed</div>
+              <div class="metric-value"><span id="windSpeed">--</span><small> km/h</small></div>
+              <p class="metric-note">At 10 metres</p>
+            </div>
+            <div class="metric">
+              <div class="metric-label"><span class="metric-icon rain">☂</span> Rain chance</div>
+              <div class="metric-value"><span id="rainChance">--</span><small>%</small></div>
+              <p class="metric-note">Today's maximum</p>
+            </div>
+            <div class="metric">
+              <div class="metric-label"><span class="metric-icon uv">☼</span> UV index</div>
+              <div class="metric-value"><span id="uvIndex">--</span><small></small></div>
+              <p class="metric-note" id="uvNote">Today's maximum</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="forecast-section">
+        <div class="section-heading forecast-heading">
+          <div><p class="card-kicker">PLAN AHEAD</p><h2>5-day forecast</h2></div>
+          <p class="muted small-text">A little look at what's coming</p>
+        </div>
+        <div class="forecast-list" id="forecastList">
+          <div class="forecast-placeholder">Forecast will appear here…</div>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>© <span id="year"></span> SkyCast Weather</span>
+        <span>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · For learning and non-commercial use</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
